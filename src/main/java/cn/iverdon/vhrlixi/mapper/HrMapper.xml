@@ -38,4 +38,7 @@
         select * from hr where username=#{username}
     </select>
 
+    <select id="getHrRolesById" resultType="cn.iverdon.vhrlixi.model.Role">
+        SELECT r.* FROM role r, hr_role hrr WHERE hrr.`rid` = r.`id` AND hrr.`hrid` = #{id}
+    </select>
 </mapper>

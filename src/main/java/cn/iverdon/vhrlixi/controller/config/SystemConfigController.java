@@ -1,4 +1,4 @@
-package cn.iverdon.vhrlixi.controller;
+package cn.iverdon.vhrlixi.controller.config;
 
 import cn.iverdon.vhrlixi.model.Menu;
 import cn.iverdon.vhrlixi.service.MenuService;
