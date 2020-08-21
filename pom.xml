@@ -10,6 +10,7 @@
     </parent>
     <groupId>cn.iverdon</groupId>
     <artifactId>vhr-lixi</artifactId>
+    <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <name>vhr-lixi</name>
     <description>Demo project for Spring Boot</description>

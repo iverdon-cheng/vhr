@@ -18,7 +18,7 @@
         <collection property="roles" ofType="cn.iverdon.vhrlixi.model.Role">
             <id column="rid" property="id"/>
             <result column="rname" property="name"/>
-            <result column="rnameZh" property="nameZh"/>
+            <result column="rnameZhform" property="nameZh"/>
         </collection>
     </resultMap>
 
@@ -26,12 +26,58 @@
         id, name, phone, telephone, address, enabled, username, password, userface, remark
     </sql>
 
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from hr
+        where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <update id="updateByPrimaryKeySelective" parameterType="cn.iverdon.vhrlixi.model.Hr">
+        update hr
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=CHAR},
+            </if>
+            <if test="telephone != null">
+                telephone = #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled,jdbcType=BIT},
+            </if>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="userFace != null">
+                userface = #{userFace,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
     <select id="getAllHrsExceptCurrentHr" resultMap="BaseResultMap">
         select * from hr where id != #{id};
     </select>
 
     <select id="getAllHrs" resultMap="HrWithRoles">
-
+        SELECT hr.id, hr.name, hr.phone, hr.telephone, hr.address, hr.enabled, hr.username, hr.userface, hr.remark
+        ,r.`id` AS rid,r.`name` AS rname,r.`nameZh` AS rnameZhform
+        FROM hr LEFT JOIN  hr_role hrr ON hr.id = hrr.`hrid`
+        LEFT JOIN role r ON r.`id`=hrr.`rid` WHERE hr.`id` != #{hrid}
+        <if test="keywords!=null">
+            and hr.name like concat('%',#{keywords},'%')
+        </if>
+        order by hr.id;
     </select>
 
     <select id="loadUserByUsername" resultMap="BaseResultMap">

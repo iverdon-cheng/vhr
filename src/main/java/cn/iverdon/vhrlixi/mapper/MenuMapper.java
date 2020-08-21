@@ -9,6 +9,7 @@ import java.util.List;
  * @date 2020/7/14 4:13 下午
  */
 public interface MenuMapper {
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(Menu record);

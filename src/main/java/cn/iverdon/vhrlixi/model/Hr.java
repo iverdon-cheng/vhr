@@ -77,9 +77,9 @@ public class Hr implements UserDetails {
         this.address = address;
     }
 
-    public Boolean getEnabled() {
-        return enabled;
-    }
+//   public Boolean getEnabled() {
+//        return enabled;
+//    }
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
@@ -128,6 +128,7 @@ public class Hr implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>(roles.size());
         for (Role role : roles){

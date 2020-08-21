@@ -49,6 +49,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+//    public static void main(String[] args) {
+//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//        System.out.println(encoder.encode("123"));
+//    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(hrService);
@@ -134,6 +139,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     @Override
                     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
                         response.setContentType("application/json;charset=utf-8");
+                        response.setStatus(401);
                         PrintWriter out = response.getWriter();
                         RespBean respBean = RespBean.ok("访问失败！");
                         if (exception instanceof InsufficientAuthenticationException){
